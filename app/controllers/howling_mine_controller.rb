@@ -1,7 +1,7 @@
 class HowlingMineController < ApplicationController
   require 'json'
 
-  before_filter :check_if_login_required, :except => [:journals, :new_issue, :issue_status, :projects, :issues]
+  before_filter :check_if_login_required, :except => [:journals, :new_issue, :issue_status, :projects, :issues, :issues_by_tracker]
   skip_before_filter :verify_authenticity_token 
   before_filter :check_api_key
   unloadable  
