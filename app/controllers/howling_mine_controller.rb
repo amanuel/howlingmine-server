@@ -57,7 +57,7 @@ class HowlingMineController < ApplicationController
     if id
       render :status => 200, :text => Issue.find(:all, :conditions => ["tracker_id = ?", id.to_i]).to_json
     else
-      render :status => 200, :text => Issues.find(:all).to_json
+      render :status => 200, :text => Issue.find(:all).to_json
     end
   end
   
