@@ -52,6 +52,15 @@ class HowlingMineController < ApplicationController
     render :status => 200, :text => Project.count
   end
   
+  def issues_by_tracker
+    id = params[:tracker_id]
+    if id
+      render :status => 200, :text => Issue.find(:all, :conditions => ["tracker_id = ?", id.to_i]).to_json
+    else
+      render :status => 200, :text => Issues.find(:all).to_json
+    end
+  end
+  
   def find
     method = (params[:method] || 'all')
     logger.info "HOWLING_MINE: find method, #{params.inspect}"
