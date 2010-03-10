@@ -26,7 +26,7 @@ class HowlingMineController < ApplicationController
     if id
        issue = Issue.find(id.to_i)
       if issue
-        render :status => 200, :text => issue.status.name
+        render :status => 200, :text => issue.status.name.to_json
       else
         render :status => 404, :text => 'Issue not found'
       end
@@ -55,9 +55,13 @@ class HowlingMineController < ApplicationController
   def issues_by_tracker
     id = params[:tracker_id]
     if id
-      render :status => 200, :text => Issue.find(:all, :conditions => ["tracker_id = ?", id.to_i]).to_json
+      issues = Issue.find(:all, :conditions => ["tracker_id = ?", id.to_i])
+      issues = inject_custom_fields(issues)
+      render :status => 200, :text => issues.to_json
     else
-      render :status => 200, :text => Issue.find(:all).to_json
+      issues = Issue.find(:all)
+      issues = inject_custom_fields(issues)
+      render :status => 200, :text => issues.to_json
     end
   end
   
